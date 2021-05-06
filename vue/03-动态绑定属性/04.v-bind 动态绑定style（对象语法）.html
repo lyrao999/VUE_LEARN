@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- v-bind 用来动态绑定元素style 属性，可以传入一个对象 {样式名1：值 [, 样式名2：值, ...]}，样式会追加到元素style 属性中，不会覆盖原先不同的style -->
+    <div id="app">
+        <h2 style="color: red;" v-bind:style="{fontSize: size}">{{message}}</h2>
+        <h2 style="color: red;" v-bind:style="getStyle()">{{message}}</h2>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                message: 'hello world',
+                size: '100px'
+            },
+            methods: {
+                getStyle: function() {
+                    return {
+                        fontSize: this.size,
+                        textDecoration: 'line-through'
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

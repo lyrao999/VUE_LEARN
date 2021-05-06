@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 1. lazy 修饰符 -->
+        <!-- 默认情况下，v-model 默认是在input 事件中同步输入框的数据的，一旦输入框数据发生改变，对应的data 中的数据就会自动发生改变，过于频繁 -->
+        <!-- lazy 修饰符可以在输入框失去焦点时，或者按下回车后，才使对应的data 中的数据更新 -->
+        <input type="text" v-model.lazy="message">
+        <h2>{{message}}</h2>
+
+        <!-- 2. number 修饰符 -->
+        <!-- 默认情况下，在输入框中输入的内容，都会被当做字符串类型处理。 -->
+        <!-- number 修饰符可以让输入框中只输入数字时的内容自动转换成数字类型；内容中包含字符串时，仍然是字符串类型 -->
+        <input type="number" @input="age01 = $event.target.value">
+        <h2>{{typeof age01}}</h2>
+
+        <input type="text" v-model.number="age02">
+        <h2>{{typeof age02}}</h2>
+
+        <!-- 3. trim 修饰符 -->
+        <!-- 如果输入框中的内容收尾包含很多空格，通常我们希望将其去除 -->
+        <!-- number 修饰符可以去除输入框中内容的左右两边的空格 -->
+        <input type="text" v-model.trim="name">
+        <h2>{{name}}</h2>
+
+    </div>
+
+
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                message: '',
+                age01: 0,
+                age02: '',
+                name: ''
+            }
+        })
+    </script>
+</body>
+
+</html>

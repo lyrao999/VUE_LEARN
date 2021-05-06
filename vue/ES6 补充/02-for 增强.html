@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <h2>总价：{{totalPrice1}}</h2>
+        <h2>总价：{{totalPrice2}}</h2>
+        <h2>总价：{{totalPrice3}}</h2>
+        <h2>总价：{{totalPrice4}}</h2>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        // ES6 中简化了 for 循环的使用方式
+        const app = new Vue({
+            el: '#app',
+            data: {
+                books: [
+                    { id: 1, name: 'Unix 编程技术', price: 119 },
+                    { id: 2, name: '代码大全', price: 105 },
+                    { id: 3, name: '深入理解计算机原理', price: 98 },
+                    { id: 4, name: '现代操作系统', price: 87 }
+                ]
+            },
+            computed: {
+                totalPrice1() {
+                    let fullPrice = 0
+                    // 常规 for 循环
+                    for (let i = 0; i < this.books.length; i++) {
+                        fullPrice += this.books[i].price
+                    }
+                    return fullPrice
+                },
+                totalPrice2() {
+                    let fullPrice = 0
+                    // ES5 中增加 forEach 用于遍历数组
+                    this.books.forEach(item => {
+                        fullPrice += item.price
+                    });
+                    return fullPrice
+                },
+                totalPrice3() {
+                    let fullPrice = 0
+
+                    // ES6 增强for 的第一种方式
+                    for (let i in this.books) {
+                        fullPrice += this.books[i].price
+                    }
+                    return fullPrice
+                },
+                totalPrice4() {
+                    let fullPrice = 0
+
+                    // ES6 增强for 的第二种方式
+                    for (let item of this.books) {
+                        fullPrice += item.price
+                    }
+                    return fullPrice
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

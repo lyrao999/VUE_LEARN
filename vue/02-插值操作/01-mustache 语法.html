@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- mustache 语法，就是双大括号 {{}} -->
+        <h1>{{firstName + " " + lastName}}</h1>
+        <h1>{{firstName}} {{lastName}}</h1>
+        <h1>{{message}}</h1>
+        <h1>{{counter * 2}}</h1>
+        <!-- <ul>
+            <li>{{movies[0]}}</li>
+            <li>{{movies[1]}}</li>
+            <li>{{movies[2]}}</li>
+        </ul> -->
+        <ul>
+            <li v-for="item in movies">{{item}}</li>
+        </ul>
+    </div>
+
+    <script src="../js/vue.js"></script>
+
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                counter: 100,
+                message: 'hello vuejs',
+                firstName: 'li',
+                lastName: 'xiaolong',
+                movies: ['星际穿越', '大话西游', '怦然心动', '盗梦空间']
+            }
+        })
+    </script>
+</body>
+
+</html>

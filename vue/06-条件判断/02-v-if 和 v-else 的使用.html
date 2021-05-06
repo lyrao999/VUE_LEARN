@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <!-- v-if 为true 时显示对应元素,为 false 则隐藏元素 -->
+        <div v-if="show">今天天晴</div>
+        <!-- <div>中间商赚差价</div> -->
+        <!-- v-else 必须紧跟在 v-if 后面，否则会报错 -->
+        <div v-else>今天下雨</div>
+    </div>
+
+
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                message: 'hello',
+                show: true
+            }
+        })
+    </script>
+</body>
+
+</html>

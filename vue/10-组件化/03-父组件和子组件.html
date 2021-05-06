@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <my-cpn></my-cpn>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        // 1. 创建组件构造器（子组件）
+        const cpn1 = Vue.extend({
+            template: `
+            <div>
+                <h2>子组件</h2>
+            </div>
+            `
+        })
+
+        // 1. 创建组件构造器（父组件）
+        const cpn2 = Vue.extend({
+            // template 嵌套其他组件时，只能有一个根元素（比如都放在同一个div 下，）
+            template: `
+            <div>
+                <h2>父组件</h2>
+                <son></son>
+            </div>
+            `,
+            components: {
+                son: cpn1
+            }
+        })
+
+        // Vue 实例，也可以看成一个组件（root 组件 / 根组件）
+        const app = new Vue({
+            el: '#app',
+            data: {
+                message: 'hello vue'
+            },
+            components: {
+                myCpn: cpn2
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 获取value -->
+        <ul>
+            <li v-for="item in info">{{item}}</li>
+        </ul>
+
+        <!-- 获取key 和value -->
+        <ul>
+            <li v-for="item, key in info">{{key}} - {{item}}</li>
+        </ul>
+
+        <!-- 获取key，value和index -->
+        <ul>
+            <li v-for="value, key, index in info">{{index+1}} - {{key}} - {{value}}</li>
+        </ul>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                info: {
+                    name: 'li',
+                    age: 18,
+                    sex: 'man'
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

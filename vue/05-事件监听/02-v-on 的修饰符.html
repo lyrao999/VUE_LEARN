@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div @click="divClick" style="background-color: pink; width: 100px;">
+            div 区域
+            <!-- 按钮1 会冒泡 -->
+            <button @click="btn1Click">按钮1</button>
+            <!-- 按钮2 事件处理函数中禁止了冒泡 -->
+            <button @click="btn2Click">按钮2</button>
+            <!-- 按钮2使用 stop 修饰符禁止冒泡，相当于 event.stopPropagation() -->
+            <button @click.stop="btn3Click">按钮3</button>
+        </div>
+
+        <br>
+
+        <!-- 阻止默认行为 -->
+        <form action="baidu" method="get">
+            <input type="submit" value="提交1" @click.prevent="btn1Click">
+        </form>
+
+        <br>
+
+        <!-- 阻止默认行为，没有表达式 -->
+        <form action="" @submit.prevent>
+            <input type="submit" value="提交2">
+        </form>
+
+        <br>
+
+        <!-- 串联修饰符 -->
+        <button @click.stop.prevent="btn1Click">串联修饰符</button>
+
+        <br>
+
+        <!-- 键修饰符，只有按下特定按键时才触发事件，两种形式：按键别名和按键代码 -->
+        <input type="text" @keyup.enter="btn1Click">
+        <input type="text" @keyup.13="btn1Click">
+
+        <br>
+
+        <!-- 只触发一次事件 -->
+        <button @click.once="btn1Click">只触发一次事件</button>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                message: 'hello'
+            },
+            methods: {
+                divClick() {
+                    console.log('divClick');
+                },
+                btn1Click() {
+                    console.log('btn1Click');
+                },
+                btn2Click(event) {
+                    // console.log(event);
+                    event.stopPropagation();
+                    console.log('btn2Click');
+                },
+                btn3Click() {
+                    console.log('btn3Click');
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

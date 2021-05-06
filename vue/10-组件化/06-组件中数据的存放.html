@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <!-- 组件是一个单独功能模块的封装，这个模块有属于自己的HTML，也应该有属于自己的数据data -->
+
+    <!-- 组件中的数据也是保存在顶层Vue 实例中的吗？ -->
+    <!-- 通过测试，发现组件中不能直接访问Vue 实例中的数据。即使可以访问，我们也不能这么做。如果把所有数据都存放在Vue 实例中，Vue 实例就会变得非常臃肿 -->
+
+    <!-- 组件自己的数据存放在哪里呢？ -->
+    <!-- 组件对象也有一个data 属性（也可以有methods 等属性），只是这个属性必须是一个函数，而且这个函数返回一个对象，对象内部保存着数据 -->
+
+
+
+    <div id="app">
+        <!-- 3. 使用组件，组件必须挂载在某个Vue 实例下 -->
+        <my-cpn1></my-cpn1>
+        <my-cpn2></my-cpn2>
+        <my-cpn3></my-cpn3>
+    </div>
+
+    <!-- 1. 使用 script 标签分离模板 -->
+    <script type="text/x-template" id="cpn1">
+        <h2>{{title1}}</h2>
+    </script>
+
+    <!-- 2. 使用 template 标签分离模板 -->
+    <template id="cpn2">
+        <h2>{{title2}}</h2>
+    </template>
+
+    <template id="cpn3">
+        <div>
+            <h2>直接访问Vue 实例中的数据：
+                <span v-if="title3">成功</span>
+                <span v-else>失败，查看控制台信息</span>
+            </h2>
+            
+            <h2>{{title3}}</h2>
+        </div>
+    </template>
+
+
+    <script src="../js/vue.js"></script>
+    <script>
+        // 注册全局组件语法糖
+        Vue.component('myCpn1', {
+            template: cpn1,
+            data() {
+                return {
+                    title1: '全局组件数据的存放'
+                }
+            }
+        })
+
+        // 注册全局组件语法糖
+        Vue.component('myCpn3', {
+            template: cpn3
+        })
+
+        const app = new Vue({
+            el: '#app',
+            data: {
+                message: 'hello vue',
+                title3: 'Vue 实例中的数据'
+            },
+            components: {
+                myCpn2: {
+                    template: cpn2,
+                    data() {
+                        return {
+                            title2: '局部组件数据的存放'
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

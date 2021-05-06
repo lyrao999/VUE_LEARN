@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 获取value -->
+        <ul>
+            <li v-for="item in names">{{item}}</li>
+        </ul>
+
+        <!-- 获取index 和value -->
+        <ul>
+            <li v-for="item, index in names">{{index+1}} - {{item}}</li>
+        </ul>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                names: ['li', 'zhou', 'zhao', 'yao']
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <!-- checkbox 绑定 v-model 指令 -->
+        <!-- 1. 如果是单选框，绑定的是一个 Boolean 变量，通过勾选和取消勾选单选框来给变量赋值 true 或者 false -->
+        <label for="agree">
+           <input type="checkbox" id="agree" v-model="isAgree">是否同意协议
+        </label>
+
+        <h2>您的选择是：
+            <span v-if="isAgree">同意</span>
+            <span v-else>不同意</span>
+        </h2>
+        <button :disabled="!isAgree">下一步</button>
+
+        <br><br><br><br>
+        <!-- 2. 如果是多选框，绑定的是一个 Array 变量，勾选选项会把对应的 value 属性的值加入数组变量中。-->
+        <!-- 可以通过给数组变量赋初值来默认勾选某些选项 -->
+        <input type="checkbox" value="篮球" v-model="hobbies">篮球
+        <input type="checkbox" value="足球" v-model="hobbies">足球
+        <input type="checkbox" value="乒乓球" v-model="hobbies">乒乓球
+        <input type="checkbox" value="羽毛球" v-model="hobbies">羽毛球
+
+        <h2>您的爱好是：
+            <span v-for="item in hobbies">{{item + " "}}</span>
+        </h2>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                isAgree: true,
+                hobbies: ['篮球']
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <!-- select 绑定 v-model 指令 -->
+        <!-- 1. 单选，绑定的是一个 String 变量，通过选择某一选项来给变量赋值对应的 value 值，可以通过给变量初始化来默认选择某一项 -->
+        <select name="abc" v-model="fruit">
+            <option value="苹果">苹果</option>
+            <option value="香蕉">香蕉</option>
+            <option value="榴莲">榴莲</option>
+            <option value="橘子">橘子</option>
+        </select>
+
+        <h2>您的选择是：
+            <span>{{fruit}}</span>
+        </h2>
+
+
+        <!-- 1. 多选，给select 添加multiple 属性。绑定的是一个 Array 变量，通过选择某些选项来给数组变量添加对应的 value 值，可以通过给数组变量初始化来默认选择某些项 -->
+        <select name="aaa" v-model="fruits" multiple>
+            <option value="苹果">苹果</option>
+            <option value="香蕉">香蕉</option>
+            <option value="榴莲">榴莲</option>
+            <option value="橘子">橘子</option>
+        </select>
+
+        <h2>您的选择是：
+            <span v-for="item in fruits">{{item}} </span>
+        </h2>
+
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                fruit: '苹果',
+                fruits: []
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .active {
+            color: red;
+        }
+
+        .big {
+            font-size: 40px;
+        }
+
+        .line {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- v-bind 用来动态绑定元素class 属性，可以传入一个数组 [类名1, 类名2, ...}]，类名会追加到元素class 属性中 -->
+    <div id="app">
+        <!-- vue 动态绑定元素class 属性时与元素原始class 属性不冲突，会全部保留（同名类名会覆盖） -->
+        <h2 class="line" :class="[active, big]">very good</h2>
+        <!-- 使用v-bind 绑定元素属性时可以直接传入一个方法，需要调用（后面加括号） -->
+        <h2 class="line" :class="getClasses()">very good</h2>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                active: 'active',
+                big: 'big'
+            },
+            methods: {
+                getClasses: function () {
+                    return [this.active, this.big]
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

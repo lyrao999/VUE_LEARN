@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="app1">
+        <h2>app1</h2>
+        <!-- 3. 使用全局组件 -->
+        <global-cpn></global-cpn>
+
+        <!-- 使用局部组件 -->
+        <!-- 局部组件必须在对应的Vue 实例下注册。而且注册时如果使用了驼峰命名法（myCpn），则在使用时要转换成短横线连接（my-cpn 或者 my-Cpn） -->
+        <my-Cpn></my-Cpn>
+    </div>
+
+    <div id="app2">
+        <h2>app2</h2>
+        <!-- 3. 使用组件，组件必须挂载在某个Vue 实例下 -->
+        <global-cpn></global-cpn>
+
+        <!-- 使用局部组件 -->
+        <cpn></cpn>
+    </div>
+
+    <!-- 组件必须挂载在某个Vue 实例下，否则不会生效 -->
+    <!-- <global-cpn></global-cpn> -->
+
+    <script src="../js/vue.js"></script>
+    <script>
+        // 1. 创建组件构造器对象
+        const globalCompotent = Vue.extend({
+            template: `
+                <div>
+                    <h2>全局组件</h2>
+                </div>`
+        })
+
+        // 2. 注册组件（全局组件，可以在多个Vue 实例下使用）
+        Vue.component('globalCpn', globalCompotent)
+
+        // 1. 创建组件构造器对象
+        const partialCompotent = Vue.extend({
+            template: `
+                <div>
+                    <h2>私有组件</h2>
+                </div>`
+        })
+
+        const app1 = new Vue({
+            el: '#app1',
+            data: {
+                message: 'hello vue'
+            },
+            components: {
+                myCpn: partialCompotent // 局部组件，只能在这个Vue 实例下使用
+            }
+        })
+
+        const app2 = new Vue({
+            el: '#app2',
+            data: {
+                message: 'hello vue'
+            },
+            components: {
+                cpn: partialCompotent // 同一个组件构造器，可以注册给多个Vue 实例作为局部组件
+            }
+        })
+    </script>
+</body>
+
+</html>

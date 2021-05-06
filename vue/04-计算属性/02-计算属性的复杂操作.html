@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <h2>总价：{{totalPrice}}</h2>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                books: [
+                    { id: 1, name: 'Unix 编程技术', price: 119 },
+                    { id: 2, name: '代码大全', price: 105 },
+                    { id: 3, name: '深入理解计算机原理', price: 98 },
+                    { id: 4, name: '现代操作系统', price: 87 }
+                ]
+            },
+            computed: {
+                totalPrice() {
+                    // 如果reduce 第二个参数没有提供，则会从数组第二个元素开始执行
+                    return this.books.reduce((acc, cur) => acc += cur.price, 0)
+                }
+            },
+            methods: {
+                getTotalPrice() {
+                    return this.books.reduce((acc, cur) => acc += cur.price, 0)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

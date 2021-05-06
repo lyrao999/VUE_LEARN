@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- v-bind 用来动态绑定元素属性 -->
+    <div id="app">
+        <img v-bind:src="imgUrl" v-bind:title="explain" v-bind:alt="explain">
+        <!-- v-bind 语法糖 -->
+        <a :href="url">百度</a>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                imgUrl: 'https://imagepphcloud.thepaper.cn/pph/image/128/236/69.jpg',
+                explain: 'v-bind 使用实例',
+                url: 'http://www.baidu.com'
+            }
+        })
+    </script>
+</body>
+
+</html>

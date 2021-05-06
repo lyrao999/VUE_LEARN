@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <ul>
+            <!-- 一般使用 value 作为key 而不使用index，确保唯一性 -->
+            <li v-for="item in names">{{item}}</li>
+        </ul>
+        <button @click="btnClick">修改第一个元素</button>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                names: ['A', 'B', 'C', 'D', 'E']
+            },
+            methods: {
+                btnClick() {
+                    // 1. 不是响应式的
+                    this.names[0] = 'F'
+
+                    // 可以这样做
+                    this.names.splice(0, 1, 'F');
+                    // 或者
+                    Vue.set(this.names, 0, 'F')
+
+                    // 2. 响应式 push, pop, unshift, shift, sort, splice, reverse
+                    this.names.reverse() // 翻转
+                    this.names.splice(1, 0, 'T') // 插入
+                    this.names.splice(1, 1, 'G') // 替换
+                    this.names.splice(1, 1) // 删除
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

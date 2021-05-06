@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <!-- radio 绑定v-model 指令时，会把用户选择的结果赋值给绑定的变量。 -->
+        <!-- 也可以通过给绑定的变量赋初值来指定默认的选择 -->
+        <label for="man">
+           <input type="radio" name="sex" id="man" value="男" v-model="sex"> 男
+        </label>
+        <label for="woman">
+           <input type="radio" name="sex" id="woman" value="女" v-model="sex">女
+        </label>
+
+        <h2>你选择的性别是：{{sex}}</h2>
+
+        <!-- 如果radio 中v-model 指令绑定的是同一个变量，则可以省略radio 中的name 属性，同样可以保持radio 的互斥关系 -->
+        <label for="read">
+           <input type="radio" id="read" value="阅读" v-model="hobby">阅读
+        </label>
+        <label for="eat">
+            <input type="radio" id="eat" value="吃东西" v-model="hobby">吃东西
+        </label>
+
+        <h2>你选择的爱好是：{{hobby}}</h2>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                sex: '男',
+                hobby: ''
+            }
+        })
+    </script>
+</body>
+
+</html>

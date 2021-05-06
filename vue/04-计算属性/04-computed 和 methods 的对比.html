@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 语法过于繁琐 -->
+        <h2>mustache 语法拼接：{{firstName + ' ' + lastName}}</h2>
+
+        <h1>观察控制台log，比较下面两种方式调用的次数</h1>
+
+        <!-- methods 方式，getFullName 方法调用了四次 -->
+        <h2>通过methods 方法拼接：{{getFullName()}}</h2>
+        <h2>通过methods 方法拼接：{{getFullName()}}</h2>
+        <h2>通过methods 方法拼接：{{getFullName()}}</h2>
+        <h2>通过methods 方法拼接：{{getFullName()}}</h2>
+
+        <!-- computed 方式，fullName 方法只调用了一次 -->
+        <!-- VUE 内部对计算属性做了缓存。它会观察 firstName 和 lastName 的变化，如果没有变化则直接使用缓存结果-->
+        <h2>通过计算属性computed 拼接：{{fullName}}</h2>
+        <h2>通过计算属性computed 拼接：{{fullName}}</h2>
+        <h2>通过计算属性computed 拼接：{{fullName}}</h2>
+        <h2>通过计算属性computed 拼接：{{fullName}}</h2>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                firstName: 'XiaoLong',
+                lastName: 'Li'
+            },
+            methods: {
+                getFullName() {
+                    console.log('methods 方式');
+                    return this.firstName + ' ' + this.lastName
+                }
+            },
+            computed: {
+                fullName() {
+                    console.log('computed 方式');
+                    return this.firstName + ' ' + this.lastName
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // ES5 对象字面量写法
+        const obj = {
+            name: 'li',
+            age: 18,
+            fun: function () { }
+        }
+
+        const name = 'li'
+        const age = 18
+        const fun = function () { }
+        const obj2 = {
+            name: name,
+            age: age,
+            fun: fun
+        }
+
+        // ES6 对象属性增强
+        const obj3 = {
+            name,  // 相当于 name: name
+            age,
+            fun  // 相当于 fun: fun
+        }
+
+        // ES6 对象函数增强
+        const obj4 = {
+            name,
+            age,
+            fun,
+            fun1() { }  // 相当于 fun1: function() {}
+        }
+    </script>
+</body>
+
+</html>

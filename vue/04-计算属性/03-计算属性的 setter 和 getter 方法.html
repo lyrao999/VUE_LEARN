@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <h2>{{getFullName()}}</h2>
+        <h2>{{fullName}}</h2>
+        <h2>{{getFullName()}}</h2>
+        <h2>{{fullName}}</h2>
+        <h2>{{getFullName()}}</h2>
+        <h2>{{fullName}}</h2>
+        <h2>{{getFullName()}}</h2>
+        <h2>{{fullName}}</h2>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                firstName: 'gardon',
+                lastName: 'james'
+            },
+            computed: {
+                // fullName: function () {
+                //     return this.firstName + " " + this.lastName
+                // }
+
+                // 计算属性其实包含 set 方法和 get 方法，只不过计算属性一般用作只读属性（只使用 get 方法），所以可以简写成上面的格式
+                // 上面的格式其实下面这种格式的简写
+                fullName: {
+                    // 可以在控制台输入 app.fullName = 'long xiao'，这是会调用set 方法并把 'long xiao' 作为参数
+                    set: function (newValue) {
+                        let names = newValue.split(' ')
+                        this.firstName = names[0]
+                        this.lastName = names[1]
+                    },
+                    // firstName 或者 lastName 发生改变时会重新调用 get 方法
+                    get: function () {
+                        return this.firstName + " " + this.lastName
+                    }
+                }
+            },
+            methods: {
+                getFullName: function () {
+                    return this.firstName + ' ' + this.lastName
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

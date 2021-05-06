@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 为什么组件中的data 必须是一个函数？ -->
+    <!-- 因为在使用多个组件实例时，每个实例都会调用data 函数，然后返回一个包含数据的对象（返回字面量形式的对象，会创建一个新的对象），这样每个组件之间的数据不会相互影响。 -->
+    <!-- 如果在外部定义一个包含数据的对象变量，然后在组件data 函数中返回这个对象变量，
+        那么所有组件实例都会共用这个对象中的数据。其中一个组件在使用时改变了这个数据，其他组件也会跟着改变 -->
+
+
+    <div id="app">
+        <!-- 组件实例 -->
+        <my-cpn></my-cpn>
+        <my-cpn></my-cpn>
+        <my-cpn></my-cpn>
+    </div>
+
+    <template id="cpn">
+        <div>
+            <h2>当前计数：{{counter}}</h2>
+            <button @click="increment">+</button>
+            <button @click="decrement">-</button>
+        </div>
+    </template>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        let num = {
+            counter: 0
+        };
+
+        // 注册全局组件语法糖
+        Vue.component('my-cpn', {
+            template: cpn,
+            data() {
+                // 不能直接返回一个全局对象变量
+                // return num
+
+                // 可以将下面的代码注释掉进行验证
+                return {
+                    counter: 0
+                }
+            },
+            // 组件使用到的事件处理函数必须定义在对应组件中
+            methods: {
+                increment() {
+                    this.counter++
+                },
+                decrement() {
+                    this.counter--
+                }
+            }
+        })
+
+        const app = new Vue({
+            el: '#app',
+            data: {
+                message: 'hello vue',
+                // title2: '局部组件数据的存放'
+            }
+        })
+    </script>
+</body>
+
+</html>

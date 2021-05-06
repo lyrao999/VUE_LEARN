@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 这里要注意在HTML 中使用组件或props 属性中的变量做元素属性时，由于HTML 不区分大小写，所以要将变量的驼峰命名法改成短横线连接的形式 -->
+        <my-cpn v-bind:cmessage="message" my-str="message"></my-cpn>
+    </div>
+
+    <template id="cpn1">
+        <div>
+            <!-- 其他形式可以直接使用 -->
+            <ul>
+                <li v-for="item in cMovies">{{item}}</li>
+            </ul>
+
+            <h2>{{cmessage}}</h2>
+
+            <h2>{{myStr}}</h2>
+        </div>
+    </template>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        // 子组件，想要使用父组件中的数据时，要定义 props 属性
+        const myCpn = {
+            template: cpn1,
+            props: {
+                cMovies: {
+                    type: Array,
+                    default () { // 数组或对象类型，必须使用default 函数定义默认值
+                        return ['默认1', '默认2', '默认3']
+                    }
+                },
+                cmessage: {
+                    type: [String, Number],
+                    required: true // 在父组件中使用时必须绑定这个变量
+                },
+                myStr: String // 也可以这样直接限制类型
+            }
+        }
+
+        // Vue 实例，也可以看成一个组件（root 组件 / 根组件），这里当成父组件
+        const app = new Vue({
+            el: '#app',
+            data: {
+                message: 'hello vue',
+                movies: ['海王', '海贼王', '海尔兄弟']
+            },
+            components: {
+                myCpn // 定义组件时，组件名用的驼峰命名法
+            }
+        })
+    </script>
+</body>
+
+</html>

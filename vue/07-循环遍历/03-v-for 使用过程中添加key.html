@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <!-- 官方推荐我们在使用 v-for 时，给对应的元素或组件添加上一个 :key 属性 -->
+
+        <!-- 这与Vue 的虚拟DOM 的diff 算法有关 -->
+        <!-- 
+            当某一层有多个相同节点时（假如是'A', 'B', 'C', 'D', 'E'），如果我们希望在中间插入一个新的节点'F' 时，diff 算法默认执行起来是这样的：
+            把C 更新为F，把D 更新成 C，把E 更新成 D，最后再插入E，效率比较低
+        -->
+
+        <!-- 当我们用key 给每一个节点做一个唯一标识时：diff 算法就可以正确识别此节点，找到正确的位置插入新节点 -->
+
+        <!-- 所以，key 的作用主要是为了高效的更新虚拟DOM -->
+
+        <ul>
+            <!-- 一般使用 value 作为key 而不使用index，确保唯一性 -->
+            <li v-for="item in names" :key="item">{{item}}</li>
+        </ul>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                names: ['A', 'B', 'C', 'D', 'E']
+            }
+        })
+    </script>
+</body>
+
+</html>

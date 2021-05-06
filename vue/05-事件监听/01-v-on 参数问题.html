@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 事件函数没有形参，在使用时可以省略小括号 -->
+        <button @click="btn1Click">按钮1</button>
+        <!-- 事件函数有形参但使用时不带小括号，浏览器默认把事件对象 event 作为实参传入函数的第一个参数 -->
+        <button @click="btn2Click">按钮2</button>
+        <!-- 其余参数为 undefined -->
+        <button @click="btn3Click">按钮3</button>
+        <!-- 也可以手动获取事件对象，$event -->
+        <button @click="btn4Click('li', $event)">按钮4</button>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                message: 'hello'
+            },
+            methods: {
+                btn1Click() {
+                    console.log('btn1')
+                },
+                btn2Click(event) {
+                    console.log(event); // 事件对象
+                },
+                btn3Click(event, name) {
+                    console.log(event); // 事件对象
+                    console.log(name); // undefined
+                },
+                btn4Click(name, event) {
+                    console.log(name); // li
+                    console.log(event); // 事件对象
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
