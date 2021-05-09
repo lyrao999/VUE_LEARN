@@ -25,6 +25,9 @@
         <my-cpn></my-cpn>
         <my-cpn></my-cpn>
         <my-cpn></my-cpn>
+
+        <!-- 因为组件中一般不会再嵌套其他元素，所以也可以做为单标签使用 -->
+        <my-cpn />
     </div>
 
     <script src="../js/vue.js"></script>
@@ -33,8 +36,7 @@
         const compotent = Vue.extend({
             template: `
                 <div>
-                    <h2>我是标题</h2>
-                    <h2>我是内容</h2>
+                    <h2>组件的简单使用</h2>
                 </div>`
         })
 

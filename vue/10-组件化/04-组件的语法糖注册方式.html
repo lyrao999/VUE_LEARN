@@ -30,7 +30,7 @@
                 </div>`
         })
 
-        // 2. 注册组件
+        // 2. 注册组件（老版本创建组件构造器方式，现在基本不用）
         Vue.component('my-cpn1', compotent)
 
         // 注册全局组件语法糖
@@ -47,7 +47,7 @@
                 message: 'hello vue'
             },
             components: {
-                myCpn3: {
+                myCpn3: {  // 注册局部组件语法糖
                     template: `
                         <div>
                             <h2>语法糖注册局部组件</h2>

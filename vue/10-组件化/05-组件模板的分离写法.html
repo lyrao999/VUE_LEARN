@@ -10,7 +10,7 @@
 
 <body>
     <div id="app">
-        <!-- 3. 使用组件，组件必须挂载在某个Vue 实例下 -->
+        <!-- 使用组件，组件必须挂载在某个Vue 实例下 -->
         <my-cpn1></my-cpn1>
         <my-cpn2></my-cpn2>
     </div>
@@ -32,10 +32,15 @@
 
     <script src="../js/vue.js"></script>
     <script>
-        // 注册全局组件语法糖
+
         Vue.component('my-cpn1', {
             template: '#cpn1'  // 可以写成选择器的形式
         })
+
+        // 也可以把组件构造器对象整个抽离出来
+        const myCpn2 = {
+            template: cpn2  // 也可以直接使用id 值作为变量
+        }
 
         const app = new Vue({
             el: '#app',
@@ -43,9 +48,7 @@
                 message: 'hello vue'
             },
             components: {
-                myCpn2: {
-                    template: cpn2  // 也可以直接使用id 值作为变量
-                }
+                myCpn2  // 相当于 myCpn2: myCpn2
             }
         })
     </script>

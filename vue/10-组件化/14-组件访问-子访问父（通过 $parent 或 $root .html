@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 1. 子组件可以通过 $parent 来访问父组件（子组件必须在父组件的实例中使用） -->
+    <!-- 获取到的是上一级组件实例 -->
+    <!-- 在实际开发中用的比较少，因为子组件会在其他组件中复用，如果使用了其中一个父组件的方法或属性，很难确定其他父组件中也有相同的方法或属性 -->
+
+    <!-- 2. 可以通过 $root 来访问根组件，也就是 Vue 实例（子组件必须在父组件的实例中使用） -->
+    <!-- 这种方式在实际开发中用的也不多，因为在Vue 实例中的信息一般比较少 -->
+
+    <div id="app">
+        <second-cpn></second-cpn>
+    </div>
+
+    <template id="temp1">
+        <div>
+            <h2>第二级组件</h2>
+            <third-cpn></third-cpn>
+        </div>
+    </template>
+
+    <script type="text/x-template" id="temp2">
+        <div>
+            <h2>第三级组件</h2>
+            <button @click="showChildrenCpn">点击在控制台打印父组件</button>
+        </div>
+    </script>
+
+
+    <script src="../js/vue.js"></script>
+    <script>
+        const thirdCpn = {
+            template: '#temp2',
+            methods: {
+                showChildrenCpn() {
+                    // 这里打印的是它的父组件，也就是第二级组件
+                    console.log(this.$parent);
+                }
+            }
+        }
+
+        const secondCpn = {
+            template: '#temp1',
+            components: {
+                thirdCpn // 第二级组件中嵌套了第三级组件
+            }
+        }
+
+        const app = new Vue({
+            el: '#app',
+            components: {
+                secondCpn // 根组件Vue 中嵌套了第二级组件
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 1. 父组件可以通过 $children 来访问子组件（这些子组件必须在父组件的实例中使用） -->
+    <!-- 获取到的是一个包含所有子组件的数组（包括添加了 ref 属性的子组件） -->
+    <!-- 在实际开发中用的比较少，因为在增加或减少组件时，想要指定使用其中某个组件比较困难 -->
+    <!-- 一般只有在需要获取全部组件时才会使用 -->
+
+    <!-- 2. 也可以通过 $refs 来访问子组件（这些子组件必须在父组件的实例中使用） -->
+    <!-- 获取到的是一个包含所有子组件的对象（这些子组件必须添加了 ref 属性） -->
+    <!-- 这种方式在实际开发中用的比较多 -->
+
+
+    <div id="app">
+        <!-- 在这里（也就是父组件中）用到的所有子组件都会添加到父组件的 $children 属性中 -->
+        <cpn></cpn>
+        <cpn></cpn>
+
+        <!-- 在使用子组件时，也可以添加 ref 属性，用属性值指定这个子组件的名称（比如下面的 “one”） -->
+        <!-- 然后就可以在父组件中通过 $refs.one 来访问这个子组件 -->
+        <cpn ref="one"></cpn>
+
+        <button @click="showChildrenCpn">点击在控制台打印子组件</button>
+    </div>
+
+    <template id="temp">
+        <div>
+            <h2>子组件</h2>
+        </div>
+    </template>
+
+
+    <script src="../js/vue.js"></script>
+    <script>
+        const cpn = {
+            template: '#temp',
+            methods: {
+                showMessage() {
+                    console.log('子组件方法');
+                }
+            }
+        }
+
+        const app = new Vue({
+            el: '#app',
+            components: {
+                cpn,
+            },
+            methods: {
+                showChildrenCpn() {
+                    // 查看 Vue 实例（这里相当于父组件）
+                    console.log('查看父组件：');
+                    console.log(this);
+
+                    // 通过 $children 访问所有子组件
+                    console.log('通过 $children 访问所有子组件：');
+                    for (let child of this.$children) {
+                        // child.showMessage();
+                        console.log(child);
+                    }
+
+                    // 通过 $refs 访问指定的子组件
+                    console.log('通过 $refs 访问指定的子组件：');
+                    console.log(this.$refs.one);
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

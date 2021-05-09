@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <my-cpn :p-num1="num1" :p-num2="num2" @num1-change="changeNum1" @num2-change="changeNum2" />
+    </div>
+
+    <template id="cpn">
+        <div>
+            <h2>pNum1: {{pNum1}}</h2>
+            <h2>dNum1: {{dNum1}}</h2>
+            <!-- <input type="text" v-model="pNum1"> -->
+
+            <!-- 不建议通过v-model 直接改变子组件的props 属性中的值，因为当父组件重新渲染时，这个值也会随之改变 -->
+            <!-- 建议使用data 或 computed 中的值代替 -->
+            <!-- <input type="text" v-model="dNum1"> -->
+
+            <!-- 如果还想实现props 中的数据跟着输入框改变，可以把输入框中数据传回父组件 -->
+            <input type="text" :value="dNum1" @input="getNum1">
+
+
+            <h2>pNum2: {{pNum2}}</h2>
+            <h2>dNum2: {{dNum2}}</h2>
+            <!-- <input type="text" v-model="pNum2"> -->
+            <!-- <input type="text" v-model="dNum2"> -->
+            <input type="text" :value="dNum2" @input="getNum2">
+
+        </div>
+    </template>
+
+    <script src="../js/vue.js"></script>
+    <script>
+
+        const myCpn = {
+            template: '#cpn',
+            props: {
+                pNum1: Number,
+                pNum2: Number
+            },
+            data() {
+                return {
+                    dNum1: this.pNum1,
+                    dNum2: this.pNum2,
+                }
+            },
+            methods: {
+                getNum1(event) {
+                    // 将 input 中的值放入 dNum1 中
+                    this.dNum1 = parseFloat(event.target.value)
+
+                    // pNum1 的值并不会跟着 dNum1 一起改变
+                    // 如果想让 pNum1 跟着发生改变。发出自定义事件，将 dNum1 的值传递给父组件
+                    this.$emit('num1-change', this.dNum1)
+
+                    // 如果还想让 pNum2 的值跟着改变
+                    this.$emit('num2-change', this.dNum1 * 100)
+
+                    // dNum2 的值并不会跟着 pNum2 一起改变
+                    // 这里需要给 dNum2 重新赋值
+                    this.dNum2 = this.dNum1 * 100
+                },
+                getNum2(event) {
+                    this.dNum2 = parseFloat(event.target.value)
+                    this.$emit('num2-change', this.dNum2)
+                    this.$emit('num1-change', this.dNum2 / 100)
+                    this.dNum1 = this.dNum2 / 100
+                }
+            }
+        }
+
+        const app = new Vue({
+            el: '#app',
+            data: {
+                num1: 0,
+                num2: 1
+            },
+            components: {
+                myCpn
+            },
+            methods: {
+                changeNum1(value) {
+                    this.num1 = value
+                },
+                changeNum2(value) {
+                    this.num2 = value
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

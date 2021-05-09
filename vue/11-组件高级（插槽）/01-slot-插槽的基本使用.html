@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <!-- 组件的插槽可以让我们封装的组件更加具有扩展性，复用性更强 -->
+    <!-- 让使用者可以决定组件内部的一些内容到底展示什么，抽取共性，保留不同 -->
+
+    <!-- 组件的插槽通过在定义组件模板时在想要增加功能的位置插入 <slot></slot> 标签来实现  -->
+
+    <div id="app">
+
+        <!-- 直接使用组件会显示插槽中的默认值 -->
+        <cpn></cpn>
+
+        <!-- 可以在组件中插入其他元素，会覆盖插槽中的默认原素 -->
+        <cpn><input type="text" value="覆盖插槽预留的默认值"></cpn>
+    </div>
+
+    <template id="temp">
+        <div>
+            <h2>组件开发</h2>
+            
+            <!-- 预留插槽，插槽中的标签是默认值 -->
+            <slot>
+                <button>插槽默认值</button>
+            </slot>
+        </div>
+    </template>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                message: 'hello vue'
+            },
+            components: {
+                cpn: {
+                    template: '#temp'
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
