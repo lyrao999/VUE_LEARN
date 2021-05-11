@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <!-- 早期网页开发中，js 作为一种脚本语言，只做一些表单验证或动画实现等简单操作，代码可以直接写在script 标签中 -->
+    <!-- 随着 ajax 异步请求的出现，慢慢形成了前后端的分离。客户端需要完成的事情越来越多，这时通常会将代码组织在多个js 文件中进行维护 -->
+
+    <!-- 但是这种维护出现了一些不可避免的问题： -->
+    <!-- 1. 全局变量同名。比如下面的例子：b.js 文件中覆盖了a.js 文件中的flag 变量，导致main.js 文件的最后结果与预期不同 -->
+    <!-- 2. 在加载js 文件时必须按照使用顺序导入js 文件。像下面的例子：main.js 中使用到了b.js 中的变量，b.js 使用到了a.js 中的变量，因此加载顺序必须是a.js -> b.js -> main.js -->
+
+
+    <h2>引用多个js 文件</h2>
+    <script src="./a.js"></script>
+    <script src="./b.js"></script>
+    <script src="./main.js"></script>
+
+    <!-- 变量同名的问题可以有办法解决 -->
+    <!-- 在js 文件中使用立即执行函数，因为函数有自己的作用域，这样就不会产生命名冲突的问题。 -->
+    <!-- 然后在立即执行函数外面定义一个变量接收函数中定义的变量和函数等，最后就可以在main.js 中使用这两个js 文件中的变量 -->
+    <!-- 这就是模块的原始雏形，幸运的是前端模块化开发已经有了很多规范以及对应的实现方案，我们只需要遵循它们的规范就可以实现模块化开发 -->
+    <!-- 常见的模块化规范：CommonJS、AMD、CMD、ES6 的modules -->
+    <script src="./a1.js"></script>
+    <script src="./b1.js"></script>
+    <script src="./main1.js"></script>
+</body>
+
+</html>
