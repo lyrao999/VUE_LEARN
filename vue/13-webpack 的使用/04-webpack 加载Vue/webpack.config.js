@@ -28,17 +28,15 @@ module.exports = {
             // 加载图片的配置
             {
                 test: /\.(png|jpg|gif|jpeg)$/,
-                use: [
-                    {
-                        loader: 'url-loader',
-                        options: {
-                            // 当加载的图片小于limit 时，会将图片编译成base64 字符串形式
-                            // 当加载的图片大于limit 时，默认使用file-loader 进行加载
-                            limit: 10,
-                            name: 'img/[name].[hash:8].[ext]'
-                        },
-                    }
-                ]
+                use: [{
+                    loader: 'url-loader',
+                    options: {
+                        // 当加载的图片小于limit 时，会将图片编译成base64 字符串形式
+                        // 当加载的图片大于limit 时，默认使用file-loader 进行加载
+                        limit: 10,
+                        name: 'img/[name].[hash:8].[ext]'
+                    },
+                }]
             },
             // 将ES6 转换成ES5 的配置
             {
@@ -52,7 +50,20 @@ module.exports = {
                         presets: ['es2015']
                     }
                 }
+            },
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader'
             }
         ]
-    }
+    },
+    resolve: {
+        alias: {
+            'vue$': 'vue/dist/vue.esm.js'
+        }
+    },
+    // plugins: [
+    //     // make sure to include the plugin!
+    //     new VueLoaderPlugin()
+    // ]
 }
