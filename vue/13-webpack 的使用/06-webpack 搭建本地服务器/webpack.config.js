@@ -1,11 +1,15 @@
 const path = require('path')
+const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
     entry: './src/main.js',
     output: {
         path: path.resolve(__dirname, './dist'),
         filename: 'bundle.js',
-        publicPath: 'dist/'
+        // 使用了html-webpack-plugin 插件之后，就不需要publicPath 属性了
+        // publicPath: 'dist/'
     },
     module: {
         rules: [
@@ -63,8 +67,25 @@ module.exports = {
         },
         extensions: ['.js', '.css', '.vue']
     },
-    // plugins: [
-    //     // make sure to include the plugin!
-    //     new VueLoaderPlugin()
-    // ]
+    plugins: [
+        // webpack 自带的插件，用于在打包后的bundle.js 文件中声明版权
+        new webpack.BannerPlugin('最终版权归XXX所有'),
+        // 自动在dist 文件夹中生成index.html 文件（可以指定模板），并把打包的bundle.js 文件自动通过script 标签插入到body 中    
+        new HtmlWebpackPlugin({
+            template: 'index.html'
+        }),
+        // 用来对js文件进行压缩，从而减小js文件的大小，加速load速度
+        // uglifyJsPlugin会拖慢webpack 的编译速度，建议在开发阶段将其关闭，部署的时候再将其打开
+        // 使用这个插件后，BannerPlugin 插件生成的版权签名会被删除掉（删除多余的注释）
+        new UglifyJsPlugin(),
+    ],
+    devServer: {
+        // 配置好devServer 选项后，修改代码不需要手动执行webpack 命令
+        // 只需要在package.json 中配置一个script：{"dev": "webpack-dev-server --open"}
+        // --open 参数表示自动打开浏览器
+        // 然后在命令行执行 npm run dev 即可
+        // 每次修改代码保存后，webpack 会在内存中自动编译，然后刷新浏览器界面。
+        contentBase: './dist',  // 为哪一个文件夹提供服务，默认是根文件夹
+        inline: true  // 页面实时刷新
+    },
 }

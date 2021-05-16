@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function sum1(a) {
+            return a + 1
+        }
+
+        // 等价于
+        const sum2 = (a) => {
+            return a + 1
+        }
+
+        // 当只有一个参数时，可以省略小括号
+        const sum3 = a => {
+            return a + 1
+        }
+
+        // 如果函数体中只有一行代码，可以省略大括号和return 关键字，这行代码的运行结果会作为返回值返回
+        const sum4 = a => a + 1
+
+        console.log(sum1(1));
+        console.log(sum2(1));
+        console.log(sum3(1));
+        console.log(sum4(1));
+
+
+
+        // 问题：箭头函数中的this 如何查找？
+        // 答案：向外层作用域中，一层层查找this，知道有this的定义
+        setTimeout(function () {
+            console.log(this);  // Window，这种方式定义的setTimeout 参数函数中的this 就是Window
+        }, 1000);
+
+        setTimeout(() => {
+            console.log(this);  // Window，因为在script 顶层标签中，this 就是Window
+        }, 1000);
+
+        const obj = {
+            fun() {
+                setTimeout(function () {
+                    console.log(this);  // Window
+                }, 1000);
+
+                setTimeout(() => {
+                    console.log(this);  // obj，当前作用域没有this，向外层查找，就是obj
+                }, 1000);
+            }
+        }
+
+        obj.fun()
+
+
+    </script>
+</body>
+
+</html>

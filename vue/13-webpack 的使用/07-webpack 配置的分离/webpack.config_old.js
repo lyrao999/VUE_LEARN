@@ -1,11 +1,20 @@
+// webpack.config.js 中的配置过多，有些配置其实只有在开发完成放入生产环境时才需要。
+// 可以把这些配置拆分成三个配置文件：base.config.js、dev.config.js、prod.config.js
+// 这样就可以将开发环境使用的配置与生产环境使用的配置分离开，减少开发时的编译时间
+
+
 const path = require('path')
+const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
     entry: './src/main.js',
     output: {
         path: path.resolve(__dirname, './dist'),
         filename: 'bundle.js',
-        publicPath: 'dist/'
+        // 使用了html-webpack-plugin 插件之后，就不需要publicPath 属性了
+        // publicPath: 'dist/'
     },
     module: {
         rules: [
@@ -63,8 +72,20 @@ module.exports = {
         },
         extensions: ['.js', '.css', '.vue']
     },
-    // plugins: [
-    //     // make sure to include the plugin!
-    //     new VueLoaderPlugin()
-    // ]
+    plugins: [
+        // webpack 自带的插件，用于在打包后的bundle.js 文件中声明版权
+        new webpack.BannerPlugin('最终版权归XXX所有'),
+        // 自动在dist 文件夹中生成index.html 文件（可以指定模板），并把打包的bundle.js 文件自动通过script 标签插入到body 中    
+        new HtmlWebpackPlugin({
+            template: 'index.html'
+        }),
+        // 用来对js文件进行压缩，从而减小js文件的大小，加速load速度
+        // uglifyJsPlugin会拖慢webpack 的编译速度，建议在开发阶段将其关闭，部署的时候再将其打开
+        // 使用这个插件后，BannerPlugin 插件生成的版权签名会被删除掉（删除多余的注释）
+        new UglifyJsPlugin(),
+    ],
+    devServer: {
+        contentBase: './dist',  // 为哪一个文件夹提供服务，默认是根文件夹
+        inline: true  // 页面实时刷新
+    },
 }

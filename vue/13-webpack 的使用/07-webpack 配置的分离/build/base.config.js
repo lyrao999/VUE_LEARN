@@ -1,11 +1,14 @@
+// 开发环境和生产环境共同依赖的配置
+
 const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     entry: './src/main.js',
     output: {
-        path: path.resolve(__dirname, './dist'),
+        // 出口路径需要调整到上一层的dist 文件夹
+        path: path.resolve(__dirname, '../dist'),
         filename: 'bundle.js',
-        publicPath: 'dist/'
     },
     module: {
         rules: [
@@ -63,8 +66,10 @@ module.exports = {
         },
         extensions: ['.js', '.css', '.vue']
     },
-    // plugins: [
-    //     // make sure to include the plugin!
-    //     new VueLoaderPlugin()
-    // ]
+    plugins: [
+        // 自动在dist 文件夹中生成index.html 文件（可以指定模板），并把打包的bundle.js 文件自动通过script 标签插入到body 中    
+        new HtmlWebpackPlugin({
+            template: 'index.html'
+        }),
+    ],
 }
