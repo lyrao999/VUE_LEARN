@@ -11,5 +11,11 @@
 <script>
 export default {
   name: "HomeNews",
+  created() {
+    console.log("homeNews created");
+  },
+  destroyed() {
+    console.log("homeNews destroyed");
+  },
 };
 </script>

@@ -9,10 +9,12 @@
 
     <!-- 2. 通过query 传参 -->
     <router-link :to="{ path: '/profile', query: { name: 'lisi', age: 18 } }"
-      >profile页面</router-link>
-    
+      >profile页面</router-link
+    >
+
     <!-- 使用keep-alive 包裹的组件不会被销毁 -->
-    <keep-alive>
+    <!-- exclude 属性的值是组件名 -->
+    <keep-alive exclude="Profile,About">
       <router-view />
     </keep-alive>
 
@@ -25,8 +27,8 @@ export default {
   name: "App",
   data() {
     return {
-      user: "lisi"
-    }
-  }
-}
+      user: "lisi",
+    };
+  },
+};
 </script>
