@@ -19,13 +19,7 @@ export default {
   right: 0;
   bottom: 0;
   height: 49px;
-  line-height: 49px;
   background-color: #f6f6f6;
   box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.1);
-}
-
-.tab-bar-item {
-  flex-grow: 1;
-  text-align: center;
 }
 </style>
