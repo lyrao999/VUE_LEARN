@@ -28,3 +28,13 @@ Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。它采用�
     - 因为在组件中commit 时需要用到这些方法，有时会出现方法名写错的情况
 
     - 所以建议新建一个mutation_types 文件，在其中把使用到的方法名都定义成常量，然后在store/index.js 中导入使用
+
+## 一般会把store 中的属性进行模块化拆分
+
+## Vuex 要求我们的mutations 中的方法必须是同步方法，不然devtools 可能检测不到
+
+## modules 的作用
+
+- Vue 使用单一状态树，也就意味着很多状态都会交给Vuex 来管理
+- 当应用变得非常复杂时，store 对象就有可能变得相当臃肿
+- 为了解决这个问题，Vuex 允许我们将store 分割成模块，每个模块拥有自己的state、mutations、actions、getters、modules等
