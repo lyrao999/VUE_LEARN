@@ -1,6 +1,9 @@
 <template>
   <div>
     <h2>{{ count }}</h2>
+    <h2>{{$store.getters.studentsover18}}</h2>
+    <h2>{{$store.getters.studentsover18count}}</h2>
+    <h2>{{$store.getters.studentinfo(20)}}</h2>
   </div>
 </template>
 
@@ -13,28 +16,15 @@ export default {
     };
   },
   computed: {
+    // 在模板中通过计算属性获取state 中的数据
     count() {
       return this.$store.state.count;
-    },
+    }
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1,
-h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+
 </style>

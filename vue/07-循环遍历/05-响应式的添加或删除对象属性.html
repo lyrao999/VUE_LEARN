@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- Vue 响应式规则：提前在data 中初始化好的属性是响应式的（对于Vuex 中的state 属性同样适用） -->
+    <div id="app">
+        <!-- 获取key，value和index -->
+        <ul>
+            <li v-for="value, key, index in info">{{index+1}} - {{key}} - {{value}}</li>
+        </ul>
+
+        <button @click="addProperty">增加score 属性</button>
+        <button @click="delProperty">删除age 属性</button>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                info: {
+                    name: 'li',
+                    age: 18,
+                    sex: 'man'
+                }
+            },
+            methods: {
+                addProperty() {
+                    // 1. 这种方式添加属性并不是响应式的
+                    // this.info['score'] = 70
+
+                    // 2. 通过Vue.set 方法响应式添加属性
+                    // Vue.set(this.info, 'score', 70)
+
+                    // 3. 或者直接给info 赋值一个新的对象
+                    this.info = {
+                        ...this.info,
+                        score: 70
+                    }
+
+                    console.log(this.info);
+                },
+                delProperty() {
+                    // 这种方式删除属性并不是响应式的
+                    // delete this.info.age
+
+                    // 通过Vue.delete 方法响应式删除属性
+                    Vue.delete(this.info, 'age')
+
+                    console.log(this.info);
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
