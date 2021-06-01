@@ -1,7 +1,7 @@
 <template>
     <div class="tab-control">
-        <div v-for="(item, index) in titles" class="tab-control-item" :key="item">
-            <span :class="{active: curIndex === index}" @click="spanClick(index)">{{item}}</span>
+        <div v-for="(item, index) in titles" class="tab-control-item" :key="index">
+            <span :class="{active: curIndex === index}" @click="spanClick(index, item)">{{item}}</span>
         </div>
     </div>
 </template>
@@ -23,8 +23,19 @@ export default {
         }
     },
     methods: {
-        spanClick(index) {
+        spanClick(index, item) {
             this.curIndex = index
+
+            switch(item) {
+                case '流行': 
+                    this.$emit('showGoods', 'sales')
+                    break
+                case '新款': 
+                    this.$emit('showGoods', 'new')
+                    break
+                case '精选': 
+                    this.$emit('showGoods', 'recommend')
+            }
         }
     }
 }

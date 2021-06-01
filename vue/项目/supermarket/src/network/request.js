@@ -1,9 +1,9 @@
 import axios from "axios";
 
 export function request(config) {
+
     // 创建axios 实例
     const ins = axios.create({
-        baseURL: 'http://123.207.32.32:8000',
         timeout: 5000
     })
 

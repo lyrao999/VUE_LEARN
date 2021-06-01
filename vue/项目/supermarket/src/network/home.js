@@ -1,17 +1,20 @@
 import { request } from './request'
+import baseURL from './baseURL'
 
 export function getHomeMutilData() {
     return request({
-        url: '/home/multidata'
+        url: baseURL.homeData
     })
 }
 
 export function getHomeGoods(type, page) {
+    const params = {
+        page
+    }
+    params[type] = 1
+
     return request({
-        url: '/home/data',
-        params: {
-            type,
-            page
-        }
+        url: baseURL.homeCate,
+        params
     })
 }

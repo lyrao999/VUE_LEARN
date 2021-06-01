@@ -18,6 +18,9 @@
     <!-- 获取到的是一个包含所有子组件的对象（这些子组件必须添加了 ref 属性） -->
     <!-- 这种方式在实际开发中用的比较多 -->
 
+    <!-- 3. 注意：ref 属性不仅仅可以用在组件上，还可以在html 元素上使用，这样获取到的将会是这个绑定的html 元素 -->
+    <!-- 有些情况下使用ref 比使用class 更好：这样做的好处是，可以获取到唯一的元素，即使其他组件中定义有相同class 或ref 名字的元素，也不会有冲突 -->
+
 
     <div id="app">
         <!-- 在这里（也就是父组件中）用到的所有子组件都会添加到父组件的 $children 属性中 -->
@@ -28,12 +31,20 @@
         <!-- 然后就可以在父组件中通过 $refs.one 来访问这个子组件 -->
         <cpn ref="one"></cpn>
 
+        <!-- 在html 元素中添加 ref 属性（比如下面的 “hh”） -->
+        <!-- 然后就可以通过 $refs.hh 来访问这个元素 -->
+        <ul ref="hh">
+            <li>哈哈1</li>
+            <li>哈哈2</li>
+            <li>哈哈3</li>
+        </ul>
+
         <button @click="showChildrenCpn">点击在控制台打印子组件</button>
     </div>
 
     <template id="temp">
         <div>
-            <h2>子组件</h2>
+            <h2 ref="hh">子组件</h2>
         </div>
     </template>
 
@@ -70,6 +81,10 @@
                     // 通过 $refs 访问指定的子组件
                     console.log('通过 $refs 访问指定的子组件：');
                     console.log(this.$refs.one);
+
+                    // 通过 $refs 访问html 元素
+                    console.log('通过 $refs 访问指定的元素：');
+                    console.log(this.$refs.hh);
                 }
             }
         })
