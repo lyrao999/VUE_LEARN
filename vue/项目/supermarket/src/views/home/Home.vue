@@ -5,14 +5,14 @@
     <scroll class="content"
             ref="scroll"
             :probe-type="3"
-            :pullUpLoad="false"
+            :pullUpLoad="true"
             @scroll="contentScroll"
             @pullingUp="loadMore">
       <home-swiper :banners="banners" />
       <home-recommend :recoms="recommends" />
       <feature-view />
       <tab-control
-        class="tab-contorl"
+        ref="tabControl"
         :titles="['流行', '新款', '精选']"
         @showGoods="changTab"
       />
@@ -38,6 +38,8 @@ import FeatureView from "./childCpn/FeatureView";
 
 import { getHomeMutilData, getHomeGoods } from "network/home";
 
+import { debounce } from 'common/utils'
+
 export default {
   name: "Home",
   data() {
@@ -47,10 +49,11 @@ export default {
       goods: {
         sales: { page: 0, list: [] },
         new: { page: 0, list: [] },
-        recommend: { page: 0, list: [] },
+        recommend: { page: 0, list: [] }
       },
       currentGoodsType: "sales",
-      isShowBackTop: false
+      isShowBackTop: false,
+      tabOffsetTop: 0
     };
   },
   components: {
@@ -63,17 +66,6 @@ export default {
     Scroll,
     BackTop,
   },
-  created() {
-    this.getMutilData();
-
-    this.getGoods("sales");
-    this.getGoods("new");
-    this.getGoods("recommend");
-
-    this.$bus.$on('imgLoaded', () => {
-      this.$refs.scroll.bs.refresh()
-    })
-  },
   methods: {
     /**
      * @Author: flydreame
@@ -82,16 +74,16 @@ export default {
      */
     getMutilData() {
       getHomeMutilData().then((res) => {
-        this.banners = res.data.banner.list;
-        this.recommends = res.data.recommend.list;
-      });
+        this.banners = res.data.banner.list
+        this.recommends = res.data.recommend.list
+      })
     },
     getGoods(type) {
-      const page = this.goods[type].page + 1;
+      const page = this.goods[type].page + 1
       getHomeGoods(type, page).then((res) => {
-        this.goods[type].list.push(...res.goods.data);
-        this.goods[type].page = page;
-      });
+        this.goods[type].list.push(...res.goods.data)
+        this.goods[type].page = page
+      })
     },
 
     /**
@@ -101,31 +93,46 @@ export default {
      */
     changTab(type) {
       // 监听TabControl 组件内部点击事件，切换到对应tab 栏
-      this.currentGoodsType = type;
+      this.currentGoodsType = type
     },
     backClick() {
       // 监听backTop 组件的原生点击事件，控制滚动条回到顶部
-      this.$refs.scroll.bsScrollTo(0, 0);
+      this.$refs.scroll && this.$refs.scroll.bsScrollTo(0, 0)
     },
     contentScroll(position) {
       // 监听better-scroll 滚动事件，控制backTop 组件显示和隐藏
-      if (position && Math.abs(position.y) >= 600) {
-        this.isShowBackTop = true
-      } else {
-        this.isShowBackTop = false
-      }
+      this.isShowBackTop = position && Math.abs(position.y) >= 600
     },
     loadMore() {
       // 上拉加载更多
       this.getGoods(this.currentGoodsType)
-      // console.log('上拉加载');
+
+      // 提供下一次 pullingUp 事件的消费机会
+      this.$refs.scroll.finishPullingUp()
     }
   },
   computed: {
     goodsList() {
-      return this.goods[this.currentGoodsType].list;
-    },
+      return this.goods[this.currentGoodsType].list
+    }
   },
+  created() {
+    this.getMutilData()
+
+    this.getGoods("sales")
+    this.getGoods("new")
+    this.getGoods("recommend")
+  },
+  mounted() {
+    // 图片加载完成的事件监听
+    const refresh = debounce(this.$refs.scroll.refresh, 50)
+    this.$bus.$on('imgLoaded', () => {
+      refresh()
+    })
+
+    // this.tabOffsetTop = this.$refs.tab-control
+    // console.log(this.$refs.tabControl);
+  }
 };
 </script>
 
@@ -158,9 +165,5 @@ export default {
   left: 0;
   right: 0;
   overflow: hidden;
-
-  /* height: calc(100% - 93px);
-  overflow: hidden;
-  margin-top: 44px; */
 }
 </style>
