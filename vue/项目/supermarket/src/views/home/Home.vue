@@ -2,7 +2,12 @@
   <div id="home">
     <nav-bar class="home-nav" />
 
-    <scroll class="content" ref="scroll">
+    <scroll class="content"
+            ref="scroll"
+            :probe-type="3"
+            :pullUpLoad="false"
+            @scroll="contentScroll"
+            @pullingUp="loadMore">
       <home-swiper :banners="banners" />
       <home-recommend :recoms="recommends" />
       <feature-view />
@@ -15,7 +20,7 @@
     </scroll>
 
     <!-- native 修饰符直接监听组件事件 -->
-    <back-top @click.native="backClick" />
+    <back-top @click.native="backClick" v-show="isShowBackTop"/>
   </div>
 </template>
 
@@ -44,7 +49,8 @@ export default {
         new: { page: 0, list: [] },
         recommend: { page: 0, list: [] },
       },
-      goodsType: "sales",
+      currentGoodsType: "sales",
+      isShowBackTop: false
     };
   },
   components: {
@@ -63,6 +69,10 @@ export default {
     this.getGoods("sales");
     this.getGoods("new");
     this.getGoods("recommend");
+
+    this.$bus.$on('imgLoaded', () => {
+      this.$refs.scroll.bs.refresh()
+    })
   },
   methods: {
     /**
@@ -90,15 +100,30 @@ export default {
      * @Desc: 事件监听相关
      */
     changTab(type) {
-      this.goodsType = type;
+      // 监听TabControl 组件内部点击事件，切换到对应tab 栏
+      this.currentGoodsType = type;
     },
     backClick() {
+      // 监听backTop 组件的原生点击事件，控制滚动条回到顶部
       this.$refs.scroll.bsScrollTo(0, 0);
     },
+    contentScroll(position) {
+      // 监听better-scroll 滚动事件，控制backTop 组件显示和隐藏
+      if (position && Math.abs(position.y) >= 600) {
+        this.isShowBackTop = true
+      } else {
+        this.isShowBackTop = false
+      }
+    },
+    loadMore() {
+      // 上拉加载更多
+      this.getGoods(this.currentGoodsType)
+      // console.log('上拉加载');
+    }
   },
   computed: {
     goodsList() {
-      return this.goods[this.goodsType].list;
+      return this.goods[this.currentGoodsType].list;
     },
   },
 };
@@ -133,5 +158,9 @@ export default {
   left: 0;
   right: 0;
   overflow: hidden;
+
+  /* height: calc(100% - 93px);
+  overflow: hidden;
+  margin-top: 44px; */
 }
 </style>

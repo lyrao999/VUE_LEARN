@@ -1,6 +1,6 @@
 <template>
-  <div class="wrapper" ref="scroll">
-    <div class="content">
+  <div ref="wrapper">
+    <div>
       <slot></slot>
     </div>
   </div>
@@ -17,24 +17,56 @@ export default {
       bs: null,
     };
   },
-  methods: {
-    // better-scroll 提供的函数scrollTop(x, y, duration)，
-    // 可以使better-scroll 控制的滚动区域的内容滚动到指定的x，y 坐标位置，第三参数是指多少毫秒完成滚动效果
+  props: {
+    probeType: {
+      type: Number,
+      default: 0
+    },
+    pullUpLoad: {
+      type: Boolean,
+      default: false
+    }
+  },
+  methods: { 
+    initBScroll() {
+      // 初始化better-scroll
+
+      // 创建better-scroll 对象
+      this.bs = new BScroll(this.$refs.wrapper, {
+        click: true,
+        probeType: this.probeType,
+        pullUpLoad: this.pullUpLoad
+      });
+
+      // 监听滚动的位置
+      this.bs.on('scroll', (position) => {
+        this.$emit('scroll', position)
+      })
+
+      // 监听上拉事件
+      this.bs.on('pullingUp', () => {
+        this.$emit('pullingUp')
+
+        // 监测到上拉刷新的动作之后，pullingUp 事件的消费机会只有一次，因此你需要调用 finishPullUp() 来告诉 BetterScroll 来提供下一次 pullingUp 事件的消费机会。
+        this.bs.finishPullUp()
+
+        // 关闭上拉加载功能，因为有时候上拉加载事件触发的过于频繁。在bsImgLoad 函数中调用 openPullUp() 函数开启上拉加载功能
+        // this.bs.closePullUp()
+      })
+    },
     bsScrollTo(x, y, duration = 300) {
+      // better-scroll 提供的函数scrollTop(x, y, duration)，
+      // 可以使better-scroll 控制的滚动区域的内容滚动到指定的x，y 坐标位置，第三参数是指多少毫秒完成滚动效果
       this.bs.scrollTo(x, y, duration);
     },
   },
   mounted() {
-    this.bs = new BScroll(this.$refs.scroll, {
-      click: true,
-    });
+    this.initBScroll()  
   },
-  updated() {
-    // 解决better-scroll 因为图片没有下载完导致的滚动条高度不够，无法浏览全部内容的问题。
-    // 原因是better-scroll 初始化是在dom 加载后执行，此时图片没有下载完成，导致滚动条高度计算不准确。
-    // 利用图片的complete 属性进行判断，当所有图片下载完成后再对scroll重新计算。
-    bsImgLoad(this.bs, this.$refs.scroll, 100);
-  },
+  // updated() {
+  //   // 解决better-scroll 因为图片没有下载完导致的滚动条高度不够，无法浏览全部内容的问题。
+  //   bsImgLoad(this.bs, this.$refs.wrapper, 10);
+  // },
   beforeDestroy() {
     this.bs.destroy();
   },

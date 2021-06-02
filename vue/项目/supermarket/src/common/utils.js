@@ -11,10 +11,10 @@ export function bsImgLoad(bs, content, delay) {
     let length = img.length;
     if (length) {
         let timer = setInterval(() => {
-            console.log("interval");
             if (count == length) {
                 // bs提供的刷新的方法，详见官网
                 bs.refresh();
+                // bs.openPullUp();
                 clearInterval(timer);
             } else if (img[count].complete) {
                 count++;
