@@ -9,6 +9,8 @@ const Category = () =>
     import ('views/category/Category')
 const ShopCar = () =>
     import ('views/shopcar/ShopCar')
+const Detail = () =>
+    import ('views/detail/Detail')
 
 Vue.use(VueRouter)
 
@@ -41,6 +43,11 @@ const routes = [{
         path: '/shopcar',
         name: 'ShopCar',
         component: ShopCar
+    },
+    {
+        name: 'Detail',
+        path: '/detail/:goodId',
+        component: Detail
     }
 ]
 

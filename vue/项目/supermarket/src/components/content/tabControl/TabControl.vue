@@ -23,19 +23,9 @@ export default {
         }
     },
     methods: {
-        spanClick(index, item) {
+        spanClick(index) {
             this.curIndex = index
-
-            switch(item) {
-                case '流行': 
-                    this.$emit('showGoods', 'sales')
-                    break
-                case '新款': 
-                    this.$emit('showGoods', 'new')
-                    break
-                case '精选': 
-                    this.$emit('showGoods', 'recommend')
-            }
+            this.$emit('showGoods', index)
         }
     }
 }
