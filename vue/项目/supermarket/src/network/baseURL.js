@@ -3,8 +3,10 @@ const baseURL02 = 'https://api.shop.eduwork.cn'
 
 const homeDataURL = baseURL01 + '/home/multidata'
 const homeCateURL = baseURL02 + '/api/index'
+const detailURL = baseURL02 + '/api/goods'
 
-export default {
-    homeData: homeDataURL,
-    homeCate: homeCateURL
+export {
+    homeDataURL,
+    homeCateURL,
+    detailURL
 }

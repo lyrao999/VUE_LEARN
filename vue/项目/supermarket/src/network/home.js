@@ -1,9 +1,9 @@
 import { request } from './request'
-import baseURL from './baseURL'
+import {homeDataURL, homeCateURL} from './baseURL'
 
 export function getHomeMutilData() {
     return request({
-        url: baseURL.homeData
+        url: homeDataURL
     })
 }
 
@@ -14,7 +14,7 @@ export function getHomeGoods(type, page) {
     params[type] = 1
 
     return request({
-        url: baseURL.homeCate,
+        url: homeCateURL,
         params
     })
 }
