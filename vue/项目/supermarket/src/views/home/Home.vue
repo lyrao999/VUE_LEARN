@@ -60,7 +60,8 @@ export default {
       currentGoodsType: "sales",
       isShowBackTop: false,
       tabOffsetTop: 0,
-      tabControlFixed: false
+      tabControlFixed: false,
+      getTabOffsetTop: null
     }
   },
   components: {
@@ -143,6 +144,18 @@ export default {
     this.getGoods("sales")
     this.getGoods("new")
     this.getGoods("recommend")
+
+    // this.$nextTick(() => {
+    //   // 根据最新的数据，DOM 重新渲染完成时，会调用这个回调函数
+    //   // 但是图片依然没有加载完（此时获取到的offsetTop 可能不包括图片）
+    //   // 一般情况下，offsetTop 不对，都是因为图片没有加载完成
+    //   this.tabOffsetTop = this.$refs.scrollTabControl.$el.offsetTop
+    //   console.log(this.tabOffsetTop);
+    // })
+
+    this.getTabOffsetTop = debounce(() => {
+      this.tabOffsetTop = this.$refs.scrollTabControl.$el.offsetTop
+    }, 50)
   },
   mounted() {
     // 图片加载完成的事件监听
@@ -152,7 +165,7 @@ export default {
     })
   },
   updated() {
-    !this.tabOffsetTop && !this.tabOffsetTop ? this.tabOffsetTop = this.$refs.scrollTabControl.$el.offsetTop : this.tabOffsetTop
+    this.getTabOffsetTop()
   }
 }
 </script>

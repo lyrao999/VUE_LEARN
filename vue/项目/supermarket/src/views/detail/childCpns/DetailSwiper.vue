@@ -41,5 +41,8 @@ export default {
 </script>
 
 <style scoped>
-
+.detail-swiper {
+    height: 300px;
+    overflow: hidden;
+}
 </style>
