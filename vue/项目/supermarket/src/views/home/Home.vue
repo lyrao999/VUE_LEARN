@@ -129,6 +129,8 @@ export default {
       // 上拉加载更多
       this.getGoods(this.currentGoodsType)
 
+      this.$toast.show('加载中', 1500)
+
       // 提供下一次 pullingUp 事件的消费机会
       this.$refs.scroll.finishPullingUp()
     }
