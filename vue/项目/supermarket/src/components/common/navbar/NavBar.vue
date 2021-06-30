@@ -17,6 +17,7 @@ export default {
         display: flex;
         height: 44px;
         line-height: 44px;
+        font-size: 16px;
         text-align: center;
         box-shadow: 0 2px 2px rgba(0, 0, 0, .1);
     }

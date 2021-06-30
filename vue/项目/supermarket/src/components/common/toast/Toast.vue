@@ -36,6 +36,7 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 8px 10px;
+  font-size: 16px;
   color: aliceblue;
   background-color: rgba(0, 0, 0, 0.75);
   z-index: 9;
